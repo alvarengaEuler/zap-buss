@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Search, Heart, Info } from "lucide-react"
+import {  Search, Heart, ListCheck, BusFront } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -11,7 +11,7 @@ export default function BottomNavigation() {
   const navItems = [
     {
       href: "/",
-      icon: Home,
+      icon: BusFront,
       label: "Início",
       active: pathname === "/",
     },
@@ -21,18 +21,19 @@ export default function BottomNavigation() {
       label: "Buscar",
       active: pathname === "/lines",
     },
+     {
+      href: "/info",
+      icon: ListCheck,
+      label: "Listas",
+      active: pathname === "/info",
+    },
     {
       href: "/favorites",
       icon: Heart,
       label: "Favoritos",
       active: pathname === "/favorites",
     },
-    {
-      href: "/info",
-      icon: Info,
-      label: "Info",
-      active: pathname === "/info",
-    },
+   
   ]
 
   return (

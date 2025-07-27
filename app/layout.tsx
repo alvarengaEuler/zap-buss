@@ -17,7 +17,20 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "BusWaze",
   },
-    generator: 'v0.dev'
+  icons: [
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "192x192",
+      url: "/zapbuss.png",
+    },
+    {
+      rel: "apple-touch-icon",
+      type: "image/png",
+      sizes: "192x192",
+      url: "/zapbuss.png",
+    },
+  ],
 }
 
 export default function RootLayout({
