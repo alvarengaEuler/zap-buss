@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "BusWaze",
   },
-  icons: [
+      icons: [
     {
       rel: "icon",
       type: "image/png",

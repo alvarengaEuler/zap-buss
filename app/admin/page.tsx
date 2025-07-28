@@ -34,6 +34,24 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { busLines } from "@/lib/mock-data"
 import { usefulInfoData, categories, getCategoryName, getCategoryIcon, type UsefulInfo } from "@/lib/useful-info-data"
 
+// Rotas disponíveis com suas cores
+const availableRoutes = [
+  { id: "via-centro", name: "Via Centro", css: "bg-blue-100 text-blue-800" },
+  { id: "via-conjunto-laginha", name: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
+  { id: "via-shopping", name: "Via Shopping", css: "bg-green-100 text-green-800" },
+  { id: "via-hospital", name: "Via Hospital", css: "bg-purple-100 text-purple-800" },
+  { id: "via-rodoviaria", name: "Via Rodoviária", css: "bg-red-100 text-red-800" },
+  { id: "via-universidade", name: "Via Universidade", css: "bg-indigo-100 text-indigo-800" },
+  { id: "via-rodovia", name: "Via Rodovia", css: "bg-orange-100 text-orange-800" },
+  { id: "via-industrial", name: "Via Industrial", css: "bg-gray-100 text-gray-800" },
+  { id: "via-mercado", name: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+  { id: "via-escola", name: "Via Escola", css: "bg-pink-100 text-pink-800" },
+  { id: "via-avenida", name: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+  { id: "via-clinica", name: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+  { id: "via-igreja", name: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+  { id: "via-prefeitura", name: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+]
+
 export default function AdminDashboard() {
   const [lines, setLines] = useState(busLines)
   const [usefulInfo, setUsefulInfo] = useState(usefulInfoData)
@@ -53,27 +71,70 @@ export default function AdminDashboard() {
   const sponsoredInfo = usefulInfo.filter((info) => info.sponsored).length
 
   const handleAddLine = (formData: FormData) => {
+    // Função para processar horários com rotas
+    const parseSchedulesWithRoutes = (scheduleString: string, routeString: string) => {
+      const times = scheduleString.split(",").map((s) => s.trim())
+      const routes = routeString.split(",").map((s) => s.trim())
+
+      return times.map((time, index) => {
+        const routeName = routes[index] || routes[0] || "Via Centro"
+        const route = availableRoutes.find((r) => r.name === routeName) || availableRoutes[0]
+        return {
+          time,
+          route: route.name,
+          css: route.css,
+        }
+      })
+    }
+
     const newLine = {
       id: formData.get("id") as string,
       name: formData.get("name") as string,
       direction: ["Ida", "Volta"],
       schedules: {
         weekday: {
-          Ida: (formData.get("weekdayIda") as string).split(",").map((s) => s.trim()),
-          Volta: (formData.get("weekdayVolta") as string).split(",").map((s) => s.trim()),
+          Ida: parseSchedulesWithRoutes(
+            formData.get("weekdayIda") as string,
+            formData.get("weekdayIdaRoutes") as string,
+          ),
+          Volta: parseSchedulesWithRoutes(
+            formData.get("weekdayVolta") as string,
+            formData.get("weekdayVoltaRoutes") as string,
+          ),
         },
         saturday: {
-          Ida: (formData.get("saturdayIda") as string).split(",").map((s) => s.trim()),
-          Volta: (formData.get("saturdayVolta") as string).split(",").map((s) => s.trim()),
+          Ida: parseSchedulesWithRoutes(
+            formData.get("saturdayIda") as string,
+            formData.get("saturdayIdaRoutes") as string,
+          ),
+          Volta: parseSchedulesWithRoutes(
+            formData.get("saturdayVolta") as string,
+            formData.get("saturdayVoltaRoutes") as string,
+          ),
         },
         sunday: {
-          Ida: (formData.get("sundayIda") as string).split(",").map((s) => s.trim()),
-          Volta: (formData.get("sundayVolta") as string).split(",").map((s) => s.trim()),
+          Ida: parseSchedulesWithRoutes(formData.get("sundayIda") as string, formData.get("sundayIdaRoutes") as string),
+          Volta: parseSchedulesWithRoutes(
+            formData.get("sundayVolta") as string,
+            formData.get("sundayVoltaRoutes") as string,
+          ),
         },
       },
       stops: (formData.get("stops") as string).split(",").map((s) => s.trim()),
       active: true,
       popular: false,
+      farePrice: {
+        ida: {
+          from: formData.get("fareIdaFrom") as string,
+          to: formData.get("fareIdaTo") as string,
+          price: formData.get("fareIdaPrice") as string,
+        },
+        volta: {
+          from: formData.get("fareVoltaFrom") as string,
+          to: formData.get("fareVoltaTo") as string,
+          price: formData.get("fareVoltaPrice") as string,
+        },
+      },
     }
 
     setLines([...lines, newLine])
@@ -81,24 +142,67 @@ export default function AdminDashboard() {
   }
 
   const handleEditLine = (formData: FormData) => {
+    // Função para processar horários com rotas
+    const parseSchedulesWithRoutes = (scheduleString: string, routeString: string) => {
+      const times = scheduleString.split(",").map((s) => s.trim())
+      const routes = routeString.split(",").map((s) => s.trim())
+
+      return times.map((time, index) => {
+        const routeName = routes[index] || routes[0] || "Via Centro"
+        const route = availableRoutes.find((r) => r.name === routeName) || availableRoutes[0]
+        return {
+          time,
+          route: route.name,
+          css: route.css,
+        }
+      })
+    }
+
     const updatedLine = {
       ...editingLine,
       name: formData.get("name") as string,
       schedules: {
         weekday: {
-          Ida: (formData.get("weekdayIda") as string).split(",").map((s) => s.trim()),
-          Volta: (formData.get("weekdayVolta") as string).split(",").map((s) => s.trim()),
+          Ida: parseSchedulesWithRoutes(
+            formData.get("weekdayIda") as string,
+            formData.get("weekdayIdaRoutes") as string,
+          ),
+          Volta: parseSchedulesWithRoutes(
+            formData.get("weekdayVolta") as string,
+            formData.get("weekdayVoltaRoutes") as string,
+          ),
         },
         saturday: {
-          Ida: (formData.get("saturdayIda") as string).split(",").map((s) => s.trim()),
-          Volta: (formData.get("saturdayVolta") as string).split(",").map((s) => s.trim()),
+          Ida: parseSchedulesWithRoutes(
+            formData.get("saturdayIda") as string,
+            formData.get("saturdayIdaRoutes") as string,
+          ),
+          Volta: parseSchedulesWithRoutes(
+            formData.get("saturdayVolta") as string,
+            formData.get("saturdayVoltaRoutes") as string,
+          ),
         },
         sunday: {
-          Ida: (formData.get("sundayIda") as string).split(",").map((s) => s.trim()),
-          Volta: (formData.get("sundayVolta") as string).split(",").map((s) => s.trim()),
+          Ida: parseSchedulesWithRoutes(formData.get("sundayIda") as string, formData.get("sundayIdaRoutes") as string),
+          Volta: parseSchedulesWithRoutes(
+            formData.get("sundayVolta") as string,
+            formData.get("sundayVoltaRoutes") as string,
+          ),
         },
       },
       stops: (formData.get("stops") as string).split(",").map((s) => s.trim()),
+      farePrice: {
+        ida: {
+          from: formData.get("fareIdaFrom") as string,
+          to: formData.get("fareIdaTo") as string,
+          price: formData.get("fareIdaPrice") as string,
+        },
+        volta: {
+          from: formData.get("fareVoltaFrom") as string,
+          to: formData.get("fareVoltaTo") as string,
+          price: formData.get("fareVoltaPrice") as string,
+        },
+      },
     }
 
     setLines(lines.map((line) => (line.id === editingLine.id ? updatedLine : line)))
@@ -327,24 +431,88 @@ export default function AdminDashboard() {
                             />
                           </div>
 
+                          {/* Valores de Passagem */}
+                          <div className="space-y-4">
+                            <h4 className="font-semibold text-green-600">Valores de Passagem</h4>
+                            <div className="grid grid-cols-2 gap-4">
+                              <div className="space-y-3 p-4 bg-blue-50 rounded-lg">
+                                <h5 className="font-medium text-blue-800">Ida</h5>
+                                <div>
+                                  <Label htmlFor="fareIdaFrom">De</Label>
+                                  <Input id="fareIdaFrom" name="fareIdaFrom" placeholder="Terminal Central" required />
+                                </div>
+                                <div>
+                                  <Label htmlFor="fareIdaTo">Para</Label>
+                                  <Input id="fareIdaTo" name="fareIdaTo" placeholder="Zona Norte" required />
+                                </div>
+                                <div>
+                                  <Label htmlFor="fareIdaPrice">Preço</Label>
+                                  <Input id="fareIdaPrice" name="fareIdaPrice" placeholder="R$ 4,50" required />
+                                </div>
+                              </div>
+                              <div className="space-y-3 p-4 bg-green-50 rounded-lg">
+                                <h5 className="font-medium text-green-800">Volta</h5>
+                                <div>
+                                  <Label htmlFor="fareVoltaFrom">De</Label>
+                                  <Input id="fareVoltaFrom" name="fareVoltaFrom" placeholder="Zona Norte" required />
+                                </div>
+                                <div>
+                                  <Label htmlFor="fareVoltaTo">Para</Label>
+                                  <Input id="fareVoltaTo" name="fareVoltaTo" placeholder="Terminal Central" required />
+                                </div>
+                                <div>
+                                  <Label htmlFor="fareVoltaPrice">Preço</Label>
+                                  <Input id="fareVoltaPrice" name="fareVoltaPrice" placeholder="R$ 4,50" required />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Rotas Disponíveis */}
+                          <div className="p-4 bg-gray-50 rounded-lg">
+                            <h4 className="font-semibold mb-3">Rotas Disponíveis</h4>
+                            <div className="grid grid-cols-2 gap-2 text-sm">
+                              {availableRoutes.map((route) => (
+                                <div key={route.id} className={`px-2 py-1 rounded text-center ${route.css}`}>
+                                  {route.name}
+                                </div>
+                              ))}
+                            </div>
+                            <p className="text-xs text-gray-600 mt-2">Use estes nomes exatos nas rotas abaixo</p>
+                          </div>
+
                           <div className="space-y-4">
                             <h4 className="font-semibold">Horários - Dia Útil</h4>
                             <div className="grid grid-cols-2 gap-4">
-                              <div>
-                                <Label htmlFor="weekdayIda">Ida (separados por vírgula)</Label>
+                              <div className="space-y-2">
+                                <Label htmlFor="weekdayIda">Ida - Horários (separados por vírgula)</Label>
                                 <Textarea
                                   id="weekdayIda"
                                   name="weekdayIda"
                                   placeholder="06:00, 07:00, 08:00..."
                                   required
                                 />
+                                <Label htmlFor="weekdayIdaRoutes">Ida - Rotas (separadas por vírgula)</Label>
+                                <Textarea
+                                  id="weekdayIdaRoutes"
+                                  name="weekdayIdaRoutes"
+                                  placeholder="Via Centro, Via Shopping, Via Centro..."
+                                  required
+                                />
                               </div>
-                              <div>
-                                <Label htmlFor="weekdayVolta">Volta (separados por vírgula)</Label>
+                              <div className="space-y-2">
+                                <Label htmlFor="weekdayVolta">Volta - Horários (separados por vírgula)</Label>
                                 <Textarea
                                   id="weekdayVolta"
                                   name="weekdayVolta"
                                   placeholder="06:30, 07:30, 08:30..."
+                                  required
+                                />
+                                <Label htmlFor="weekdayVoltaRoutes">Volta - Rotas (separadas por vírgula)</Label>
+                                <Textarea
+                                  id="weekdayVoltaRoutes"
+                                  name="weekdayVoltaRoutes"
+                                  placeholder="Via Hospital, Via Centro, Via Hospital..."
                                   required
                                 />
                               </div>
@@ -354,21 +522,35 @@ export default function AdminDashboard() {
                           <div className="space-y-4">
                             <h4 className="font-semibold">Horários - Sábado</h4>
                             <div className="grid grid-cols-2 gap-4">
-                              <div>
-                                <Label htmlFor="saturdayIda">Ida (separados por vírgula)</Label>
+                              <div className="space-y-2">
+                                <Label htmlFor="saturdayIda">Ida - Horários (separados por vírgula)</Label>
                                 <Textarea
                                   id="saturdayIda"
                                   name="saturdayIda"
                                   placeholder="07:00, 09:00, 11:00..."
                                   required
                                 />
+                                <Label htmlFor="saturdayIdaRoutes">Ida - Rotas (separadas por vírgula)</Label>
+                                <Textarea
+                                  id="saturdayIdaRoutes"
+                                  name="saturdayIdaRoutes"
+                                  placeholder="Via Centro, Via Shopping, Via Centro..."
+                                  required
+                                />
                               </div>
-                              <div>
-                                <Label htmlFor="saturdayVolta">Volta (separados por vírgula)</Label>
+                              <div className="space-y-2">
+                                <Label htmlFor="saturdayVolta">Volta - Horários (separados por vírgula)</Label>
                                 <Textarea
                                   id="saturdayVolta"
                                   name="saturdayVolta"
                                   placeholder="07:30, 09:30, 11:30..."
+                                  required
+                                />
+                                <Label htmlFor="saturdayVoltaRoutes">Volta - Rotas (separadas por vírgula)</Label>
+                                <Textarea
+                                  id="saturdayVoltaRoutes"
+                                  name="saturdayVoltaRoutes"
+                                  placeholder="Via Hospital, Via Centro, Via Hospital..."
                                   required
                                 />
                               </div>
@@ -378,21 +560,35 @@ export default function AdminDashboard() {
                           <div className="space-y-4">
                             <h4 className="font-semibold">Horários - Domingo</h4>
                             <div className="grid grid-cols-2 gap-4">
-                              <div>
-                                <Label htmlFor="sundayIda">Ida (separados por vírgula)</Label>
+                              <div className="space-y-2">
+                                <Label htmlFor="sundayIda">Ida - Horários (separados por vírgula)</Label>
                                 <Textarea
                                   id="sundayIda"
                                   name="sundayIda"
                                   placeholder="08:00, 10:00, 12:00..."
                                   required
                                 />
+                                <Label htmlFor="sundayIdaRoutes">Ida - Rotas (separadas por vírgula)</Label>
+                                <Textarea
+                                  id="sundayIdaRoutes"
+                                  name="sundayIdaRoutes"
+                                  placeholder="Via Centro, Via Shopping, Via Centro..."
+                                  required
+                                />
                               </div>
-                              <div>
-                                <Label htmlFor="sundayVolta">Volta (separados por vírgula)</Label>
+                              <div className="space-y-2">
+                                <Label htmlFor="sundayVolta">Volta - Horários (separados por vírgula)</Label>
                                 <Textarea
                                   id="sundayVolta"
                                   name="sundayVolta"
                                   placeholder="08:30, 10:30, 12:30..."
+                                  required
+                                />
+                                <Label htmlFor="sundayVoltaRoutes">Volta - Rotas (separadas por vírgula)</Label>
+                                <Textarea
+                                  id="sundayVoltaRoutes"
+                                  name="sundayVoltaRoutes"
+                                  placeholder="Via Hospital, Via Centro, Via Hospital..."
                                   required
                                 />
                               </div>
@@ -495,24 +691,131 @@ export default function AdminDashboard() {
                                           />
                                         </div>
 
+                                        {/* Valores de Passagem */}
+                                        <div className="space-y-4">
+                                          <h4 className="font-semibold text-green-600">Valores de Passagem</h4>
+                                          <div className="grid grid-cols-2 gap-4">
+                                            <div className="space-y-3 p-4 bg-blue-50 rounded-lg">
+                                              <h5 className="font-medium text-blue-800">Ida</h5>
+                                              <div>
+                                                <Label htmlFor="edit-fareIdaFrom">De</Label>
+                                                <Input
+                                                  id="edit-fareIdaFrom"
+                                                  name="fareIdaFrom"
+                                                  defaultValue={editingLine.farePrice?.ida?.from || ""}
+                                                  required
+                                                />
+                                              </div>
+                                              <div>
+                                                <Label htmlFor="edit-fareIdaTo">Para</Label>
+                                                <Input
+                                                  id="edit-fareIdaTo"
+                                                  name="fareIdaTo"
+                                                  defaultValue={editingLine.farePrice?.ida?.to || ""}
+                                                  required
+                                                />
+                                              </div>
+                                              <div>
+                                                <Label htmlFor="edit-fareIdaPrice">Preço</Label>
+                                                <Input
+                                                  id="edit-fareIdaPrice"
+                                                  name="fareIdaPrice"
+                                                  defaultValue={editingLine.farePrice?.ida?.price || ""}
+                                                  required
+                                                />
+                                              </div>
+                                            </div>
+                                            <div className="space-y-3 p-4 bg-green-50 rounded-lg">
+                                              <h5 className="font-medium text-green-800">Volta</h5>
+                                              <div>
+                                                <Label htmlFor="edit-fareVoltaFrom">De</Label>
+                                                <Input
+                                                  id="edit-fareVoltaFrom"
+                                                  name="fareVoltaFrom"
+                                                  defaultValue={editingLine.farePrice?.volta?.from || ""}
+                                                  required
+                                                />
+                                              </div>
+                                              <div>
+                                                <Label htmlFor="edit-fareVoltaTo">Para</Label>
+                                                <Input
+                                                  id="edit-fareVoltaTo"
+                                                  name="fareVoltaTo"
+                                                  defaultValue={editingLine.farePrice?.volta?.to || ""}
+                                                  required
+                                                />
+                                              </div>
+                                              <div>
+                                                <Label htmlFor="edit-fareVoltaPrice">Preço</Label>
+                                                <Input
+                                                  id="edit-fareVoltaPrice"
+                                                  name="fareVoltaPrice"
+                                                  defaultValue={editingLine.farePrice?.volta?.price || ""}
+                                                  required
+                                                />
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        {/* Rotas Disponíveis */}
+                                        <div className="p-4 bg-gray-50 rounded-lg">
+                                          <h4 className="font-semibold mb-3">Rotas Disponíveis</h4>
+                                          <div className="grid grid-cols-2 gap-2 text-sm">
+                                            {availableRoutes.map((route) => (
+                                              <div
+                                                key={route.id}
+                                                className={`px-2 py-1 rounded text-center ${route.css}`}
+                                              >
+                                                {route.name}
+                                              </div>
+                                            ))}
+                                          </div>
+                                          <p className="text-xs text-gray-600 mt-2">
+                                            Use estes nomes exatos nas rotas abaixo
+                                          </p>
+                                        </div>
+
                                         <div className="space-y-4">
                                           <h4 className="font-semibold">Horários - Dia Útil</h4>
                                           <div className="grid grid-cols-2 gap-4">
-                                            <div>
-                                              <Label htmlFor="edit-weekdayIda">Ida</Label>
+                                            <div className="space-y-2">
+                                              <Label htmlFor="edit-weekdayIda">Ida - Horários</Label>
                                               <Textarea
                                                 id="edit-weekdayIda"
                                                 name="weekdayIda"
-                                                defaultValue={editingLine.schedules.weekday.Ida.join(", ")}
+                                                defaultValue={editingLine.schedules.weekday.Ida.map((s) => s.time).join(
+                                                  ", ",
+                                                )}
+                                                required
+                                              />
+                                              <Label htmlFor="edit-weekdayIdaRoutes">Ida - Rotas</Label>
+                                              <Textarea
+                                                id="edit-weekdayIdaRoutes"
+                                                name="weekdayIdaRoutes"
+                                                defaultValue={editingLine.schedules.weekday.Ida.map(
+                                                  (s) => s.route,
+                                                ).join(", ")}
                                                 required
                                               />
                                             </div>
-                                            <div>
-                                              <Label htmlFor="edit-weekdayVolta">Volta</Label>
+                                            <div className="space-y-2">
+                                              <Label htmlFor="edit-weekdayVolta">Volta - Horários</Label>
                                               <Textarea
                                                 id="edit-weekdayVolta"
                                                 name="weekdayVolta"
-                                                defaultValue={editingLine.schedules.weekday.Volta.join(", ")}
+                                                defaultValue={editingLine.schedules.weekday.Volta.map(
+                                                  (s) => s.time,
+                                                ).join(", ")}
+                                                required
+                                              />
+                                              <Label htmlFor="edit-weekdayVoltaRoutes">Volta - Rotas</Label>
+                                              <Textarea
+                                                id="edit-weekdayVoltaRoutes"
+                                                name="weekdayVoltaRoutes"
+                                                defaultValue={editingLine.schedules.weekday.Volta.map(
+                                                  (s) => s.route,
+                                                ).join(", ")}
                                                 required
                                               />
                                             </div>
@@ -522,21 +825,43 @@ export default function AdminDashboard() {
                                         <div className="space-y-4">
                                           <h4 className="font-semibold">Horários - Sábado</h4>
                                           <div className="grid grid-cols-2 gap-4">
-                                            <div>
-                                              <Label htmlFor="edit-saturdayIda">Ida</Label>
+                                            <div className="space-y-2">
+                                              <Label htmlFor="edit-saturdayIda">Ida - Horários</Label>
                                               <Textarea
                                                 id="edit-saturdayIda"
                                                 name="saturdayIda"
-                                                defaultValue={editingLine.schedules.saturday.Ida.join(", ")}
+                                                defaultValue={editingLine.schedules.saturday.Ida.map(
+                                                  (s) => s.time,
+                                                ).join(", ")}
+                                                required
+                                              />
+                                              <Label htmlFor="edit-saturdayIdaRoutes">Ida - Rotas</Label>
+                                              <Textarea
+                                                id="edit-saturdayIdaRoutes"
+                                                name="saturdayIdaRoutes"
+                                                defaultValue={editingLine.schedules.saturday.Ida.map(
+                                                  (s) => s.route,
+                                                ).join(", ")}
                                                 required
                                               />
                                             </div>
-                                            <div>
-                                              <Label htmlFor="edit-saturdayVolta">Volta</Label>
+                                            <div className="space-y-2">
+                                              <Label htmlFor="edit-saturdayVolta">Volta - Horários</Label>
                                               <Textarea
                                                 id="edit-saturdayVolta"
                                                 name="saturdayVolta"
-                                                defaultValue={editingLine.schedules.saturday.Volta.join(", ")}
+                                                defaultValue={editingLine.schedules.saturday.Volta.map(
+                                                  (s) => s.time,
+                                                ).join(", ")}
+                                                required
+                                              />
+                                              <Label htmlFor="edit-saturdayVoltaRoutes">Volta - Rotas</Label>
+                                              <Textarea
+                                                id="edit-saturdayVoltaRoutes"
+                                                name="saturdayVoltaRoutes"
+                                                defaultValue={editingLine.schedules.saturday.Volta.map(
+                                                  (s) => s.route,
+                                                ).join(", ")}
                                                 required
                                               />
                                             </div>
@@ -546,21 +871,43 @@ export default function AdminDashboard() {
                                         <div className="space-y-4">
                                           <h4 className="font-semibold">Horários - Domingo</h4>
                                           <div className="grid grid-cols-2 gap-4">
-                                            <div>
-                                              <Label htmlFor="edit-sundayIda">Ida</Label>
+                                            <div className="space-y-2">
+                                              <Label htmlFor="edit-sundayIda">Ida - Horários</Label>
                                               <Textarea
                                                 id="edit-sundayIda"
                                                 name="sundayIda"
-                                                defaultValue={editingLine.schedules.sunday.Ida.join(", ")}
+                                                defaultValue={editingLine.schedules.sunday.Ida.map((s) => s.time).join(
+                                                  ", ",
+                                                )}
+                                                required
+                                              />
+                                              <Label htmlFor="edit-sundayIdaRoutes">Ida - Rotas</Label>
+                                              <Textarea
+                                                id="edit-sundayIdaRoutes"
+                                                name="sundayIdaRoutes"
+                                                defaultValue={editingLine.schedules.sunday.Ida.map((s) => s.route).join(
+                                                  ", ",
+                                                )}
                                                 required
                                               />
                                             </div>
-                                            <div>
-                                              <Label htmlFor="edit-sundayVolta">Volta</Label>
+                                            <div className="space-y-2">
+                                              <Label htmlFor="edit-sundayVolta">Volta - Horários</Label>
                                               <Textarea
                                                 id="edit-sundayVolta"
                                                 name="sundayVolta"
-                                                defaultValue={editingLine.schedules.sunday.Volta.join(", ")}
+                                                defaultValue={editingLine.schedules.sunday.Volta.map(
+                                                  (s) => s.time,
+                                                ).join(", ")}
+                                                required
+                                              />
+                                              <Label htmlFor="edit-sundayVoltaRoutes">Volta - Rotas</Label>
+                                              <Textarea
+                                                id="edit-sundayVoltaRoutes"
+                                                name="sundayVoltaRoutes"
+                                                defaultValue={editingLine.schedules.sunday.Volta.map(
+                                                  (s) => s.route,
+                                                ).join(", ")}
                                                 required
                                               />
                                             </div>
@@ -651,12 +998,26 @@ export default function AdminDashboard() {
                             <h4 className="font-semibold mb-3 text-blue-600">Dia Útil</h4>
                             <div className="space-y-2">
                               <div>
-                                <p className="text-sm font-medium text-gray-700">Ida:</p>
-                                <p className="text-sm text-gray-600">{line.schedules.weekday.Ida.join(", ")}</p>
+                                <p className="text-sm font-medium text-gray-700 mb-2">Ida:</p>
+                                <div className="grid grid-cols-2 gap-1">
+                                  {line.schedules.weekday.Ida.map((schedule, index) => (
+                                    <div key={index} className={`text-xs p-1 rounded text-center ${schedule.css}`}>
+                                      <div className="font-semibold">{schedule.time}</div>
+                                      <div className="opacity-80">{schedule.route}</div>
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
                               <div>
-                                <p className="text-sm font-medium text-gray-700">Volta:</p>
-                                <p className="text-sm text-gray-600">{line.schedules.weekday.Volta.join(", ")}</p>
+                                <p className="text-sm font-medium text-gray-700 mb-2">Volta:</p>
+                                <div className="grid grid-cols-2 gap-1">
+                                  {line.schedules.weekday.Volta.map((schedule, index) => (
+                                    <div key={index} className={`text-xs p-1 rounded text-center ${schedule.css}`}>
+                                      <div className="font-semibold">{schedule.time}</div>
+                                      <div className="opacity-80">{schedule.route}</div>
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -665,12 +1026,26 @@ export default function AdminDashboard() {
                             <h4 className="font-semibold mb-3 text-green-600">Sábado</h4>
                             <div className="space-y-2">
                               <div>
-                                <p className="text-sm font-medium text-gray-700">Ida:</p>
-                                <p className="text-sm text-gray-600">{line.schedules.saturday.Ida.join(", ")}</p>
+                                <p className="text-sm font-medium text-gray-700 mb-2">Ida:</p>
+                                <div className="grid grid-cols-2 gap-1">
+                                  {line.schedules.saturday.Ida.map((schedule, index) => (
+                                    <div key={index} className={`text-xs p-1 rounded text-center ${schedule.css}`}>
+                                      <div className="font-semibold">{schedule.time}</div>
+                                      <div className="opacity-80">{schedule.route}</div>
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
                               <div>
-                                <p className="text-sm font-medium text-gray-700">Volta:</p>
-                                <p className="text-sm text-gray-600">{line.schedules.saturday.Volta.join(", ")}</p>
+                                <p className="text-sm font-medium text-gray-700 mb-2">Volta:</p>
+                                <div className="grid grid-cols-2 gap-1">
+                                  {line.schedules.saturday.Volta.map((schedule, index) => (
+                                    <div key={index} className={`text-xs p-1 rounded text-center ${schedule.css}`}>
+                                      <div className="font-semibold">{schedule.time}</div>
+                                      <div className="opacity-80">{schedule.route}</div>
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -679,12 +1054,26 @@ export default function AdminDashboard() {
                             <h4 className="font-semibold mb-3 text-purple-600">Domingo</h4>
                             <div className="space-y-2">
                               <div>
-                                <p className="text-sm font-medium text-gray-700">Ida:</p>
-                                <p className="text-sm text-gray-600">{line.schedules.sunday.Ida.join(", ")}</p>
+                                <p className="text-sm font-medium text-gray-700 mb-2">Ida:</p>
+                                <div className="grid grid-cols-2 gap-1">
+                                  {line.schedules.sunday.Ida.map((schedule, index) => (
+                                    <div key={index} className={`text-xs p-1 rounded text-center ${schedule.css}`}>
+                                      <div className="font-semibold">{schedule.time}</div>
+                                      <div className="opacity-80">{schedule.route}</div>
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
                               <div>
-                                <p className="text-sm font-medium text-gray-700">Volta:</p>
-                                <p className="text-sm text-gray-600">{line.schedules.sunday.Volta.join(", ")}</p>
+                                <p className="text-sm font-medium text-gray-700 mb-2">Volta:</p>
+                                <div className="grid grid-cols-2 gap-1">
+                                  {line.schedules.sunday.Volta.map((schedule, index) => (
+                                    <div key={index} className={`text-xs p-1 rounded text-center ${schedule.css}`}>
+                                      <div className="font-semibold">{schedule.time}</div>
+                                      <div className="opacity-80">{schedule.route}</div>
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
                             </div>
                           </div>

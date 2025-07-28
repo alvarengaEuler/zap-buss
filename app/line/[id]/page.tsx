@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ArrowLeft, Clock, MapPin, ExternalLink, Heart, Bus } from "lucide-react"
+import { ArrowLeft, Clock, MapPin, ExternalLink, Heart, Bus, DollarSign } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -103,12 +103,49 @@ export default function LineDetailsPage({ params }: { params: { id: string } }) 
                     {nextBusInfo.direction} - Saindo do ponto final em{" "}
                     <span className="font-bold">{nextBusInfo.minutesUntil} minutos</span>
                   </p>
-                  <p className="text-white/80 text-xs mt-1">Horário programado: {nextBusInfo.scheduledTime}</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <p className="text-white/80 text-xs">Horário: {nextBusInfo.scheduledTime}</p>
+                    <Badge className={`text-xs ${nextBusInfo.css} border-0`}>{nextBusInfo.route}</Badge>
+                  </div>
                 </div>
               </div>
             </CardContent>
           </Card>
         )}
+
+        {/* Fare Prices */}
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <DollarSign className="w-5 h-5 text-green-600" />
+              Valor da Passagem
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h4 className="font-semibold text-blue-800 mb-2">Ida</h4>
+                <p className="text-sm text-blue-700 mb-1">
+                  <strong>De:</strong> {line.farePrice.ida.from}
+                </p>
+                <p className="text-sm text-blue-700 mb-2">
+                  <strong>Para:</strong> {line.farePrice.ida.to}
+                </p>
+                <p className="text-lg font-bold text-blue-800">{line.farePrice.ida.price}</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h4 className="font-semibold text-green-800 mb-2">Volta</h4>
+                <p className="text-sm text-green-700 mb-1">
+                  <strong>De:</strong> {line.farePrice.volta.from}
+                </p>
+                <p className="text-sm text-green-700 mb-2">
+                  <strong>Para:</strong> {line.farePrice.volta.to}
+                </p>
+                <p className="text-lg font-bold text-green-800">{line.farePrice.volta.price}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Schedules */}
         <Card className="mb-6">
@@ -133,25 +170,27 @@ export default function LineDetailsPage({ params }: { params: { id: string } }) 
                     <TabsTrigger value="Volta">Volta</TabsTrigger>
                   </TabsList>
                   <TabsContent value="Ida">
-                    <div className="grid grid-cols-3 gap-2">
-                      {line.schedules.weekday.Ida.map((time, index) => (
+                    <div className="grid grid-cols-2 gap-2">
+                      {line.schedules.weekday.Ida.map((schedule, index) => (
                         <div
                           key={index}
-                          className="bg-blue-50 text-blue-800 text-center py-2 px-3 rounded-lg font-medium text-sm"
+                          className={`text-center py-2 px-3 rounded-lg font-medium text-sm ${schedule.css}`}
                         >
-                          {time}
+                          <div className="font-semibold">{schedule.time}</div>
+                          <div className="text-xs mt-1 opacity-80">{schedule.route}</div>
                         </div>
                       ))}
                     </div>
                   </TabsContent>
                   <TabsContent value="Volta">
-                    <div className="grid grid-cols-3 gap-2">
-                      {line.schedules.weekday.Volta.map((time, index) => (
+                    <div className="grid grid-cols-2 gap-2">
+                      {line.schedules.weekday.Volta.map((schedule, index) => (
                         <div
                           key={index}
-                          className="bg-green-50 text-green-800 text-center py-2 px-3 rounded-lg font-medium text-sm"
+                          className={`text-center py-2 px-3 rounded-lg font-medium text-sm ${schedule.css}`}
                         >
-                          {time}
+                          <div className="font-semibold">{schedule.time}</div>
+                          <div className="text-xs mt-1 opacity-80">{schedule.route}</div>
                         </div>
                       ))}
                     </div>
@@ -166,25 +205,27 @@ export default function LineDetailsPage({ params }: { params: { id: string } }) 
                     <TabsTrigger value="Volta">Volta</TabsTrigger>
                   </TabsList>
                   <TabsContent value="Ida">
-                    <div className="grid grid-cols-3 gap-2">
-                      {line.schedules.saturday.Ida.map((time, index) => (
+                    <div className="grid grid-cols-2 gap-2">
+                      {line.schedules.saturday.Ida.map((schedule, index) => (
                         <div
                           key={index}
-                          className="bg-blue-50 text-blue-800 text-center py-2 px-3 rounded-lg font-medium text-sm"
+                          className={`text-center py-2 px-3 rounded-lg font-medium text-sm ${schedule.css}`}
                         >
-                          {time}
+                          <div className="font-semibold">{schedule.time}</div>
+                          <div className="text-xs mt-1 opacity-80">{schedule.route}</div>
                         </div>
                       ))}
                     </div>
                   </TabsContent>
                   <TabsContent value="Volta">
-                    <div className="grid grid-cols-3 gap-2">
-                      {line.schedules.saturday.Volta.map((time, index) => (
+                    <div className="grid grid-cols-2 gap-2">
+                      {line.schedules.saturday.Volta.map((schedule, index) => (
                         <div
                           key={index}
-                          className="bg-green-50 text-green-800 text-center py-2 px-3 rounded-lg font-medium text-sm"
+                          className={`text-center py-2 px-3 rounded-lg font-medium text-sm ${schedule.css}`}
                         >
-                          {time}
+                          <div className="font-semibold">{schedule.time}</div>
+                          <div className="text-xs mt-1 opacity-80">{schedule.route}</div>
                         </div>
                       ))}
                     </div>
@@ -199,25 +240,27 @@ export default function LineDetailsPage({ params }: { params: { id: string } }) 
                     <TabsTrigger value="Volta">Volta</TabsTrigger>
                   </TabsList>
                   <TabsContent value="Ida">
-                    <div className="grid grid-cols-3 gap-2">
-                      {line.schedules.sunday.Ida.map((time, index) => (
+                    <div className="grid grid-cols-2 gap-2">
+                      {line.schedules.sunday.Ida.map((schedule, index) => (
                         <div
                           key={index}
-                          className="bg-blue-50 text-blue-800 text-center py-2 px-3 rounded-lg font-medium text-sm"
+                          className={`text-center py-2 px-3 rounded-lg font-medium text-sm ${schedule.css}`}
                         >
-                          {time}
+                          <div className="font-semibold">{schedule.time}</div>
+                          <div className="text-xs mt-1 opacity-80">{schedule.route}</div>
                         </div>
                       ))}
                     </div>
                   </TabsContent>
                   <TabsContent value="Volta">
-                    <div className="grid grid-cols-3 gap-2">
-                      {line.schedules.sunday.Volta.map((time, index) => (
+                    <div className="grid grid-cols-2 gap-2">
+                      {line.schedules.sunday.Volta.map((schedule, index) => (
                         <div
                           key={index}
-                          className="bg-green-50 text-green-800 text-center py-2 px-3 rounded-lg font-medium text-sm"
+                          className={`text-center py-2 px-3 rounded-lg font-medium text-sm ${schedule.css}`}
                         >
-                          {time}
+                          <div className="font-semibold">{schedule.time}</div>
+                          <div className="text-xs mt-1 opacity-80">{schedule.route}</div>
                         </div>
                       ))}
                     </div>

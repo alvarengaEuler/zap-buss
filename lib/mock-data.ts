@@ -1,4 +1,45 @@
-export const busLines = [
+export interface RouteSchedule {
+  time: string
+  route: string
+  css: string
+}
+
+export interface BusLine {
+  id: string
+  name: string
+  direction: string[]
+  schedules: {
+    weekday: {
+      Ida: RouteSchedule[]
+      Volta: RouteSchedule[]
+    }
+    saturday: {
+      Ida: RouteSchedule[]
+      Volta: RouteSchedule[]
+    }
+    sunday: {
+      Ida: RouteSchedule[]
+      Volta: RouteSchedule[]
+    }
+  }
+  stops: string[]
+  active: boolean
+  popular: boolean
+  farePrice: {
+    ida: {
+      from: string
+      to: string
+      price: string
+    }
+    volta: {
+      from: string
+      to: string
+      price: string
+    }
+  }
+}
+
+export const busLines: BusLine[] = [
   {
     id: "250",
     name: "Conjunto Amélia Torres (Circular)",
@@ -6,47 +47,81 @@ export const busLines = [
     schedules: {
       weekday: {
         Ida: [
-          "05:30",
-          "06:30",
-          "07:30",
-          "08:30",
-          "09:30",
-          "10:30",
-          "11:30",
-          "12:00",
-          "13:30",
-          "14:30",
-          "15:30",
-          "16:30",
-          "17:30",
-          "18:00",
-          "19:00",
+          { time: "05:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "06:30", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
+          { time: "07:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "08:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "09:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:30", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
+          { time: "11:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "12:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "13:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "14:30", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
+          { time: "15:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "17:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "18:00", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
+          { time: "19:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
         ],
         Volta: [
-          "06:00",
-          "07:00",
-          "08:00",
-          "09:00",
-          "10:00",
-          "11:00",
-          "12:00",
-          "12:30",
-          "14:00",
-          "15:00",
-          "16:00",
-          "17:00",
-          "18:00",
-          "18:30",
-          "19:30",
+          { time: "06:00", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
+          { time: "07:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "08:00", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
+          { time: "09:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "11:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "12:00", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
+          { time: "12:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "14:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "15:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:00", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
+          { time: "17:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "18:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "18:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "19:30", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
         ],
       },
       saturday: {
-        Ida: ["06:00", "07:30", "09:00", "10:30", "12:00", "13:30", "15:00", "16:30", "18:00"],
-        Volta: ["06:30", "08:00", "09:30", "11:00", "12:30", "14:00", "15:30", "17:00", "18:30"],
+        Ida: [
+          { time: "06:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "07:30", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
+          { time: "09:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "12:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:30", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
+          { time: "15:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "18:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
+        Volta: [
+          { time: "06:30", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
+          { time: "08:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "09:30", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
+          { time: "11:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "12:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "14:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "15:30", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
+          { time: "17:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "18:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+        ],
       },
       sunday: {
-        Ida: ["07:00", "09:00", "11:00", "13:00", "15:00", "17:00"],
-        Volta: ["07:30", "09:30", "11:30", "13:30", "15:30", "17:30"],
+        Ida: [
+          { time: "07:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "09:00", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
+          { time: "11:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "15:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "17:00", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
+        ],
+        Volta: [
+          { time: "07:30", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
+          { time: "09:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "11:30", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
+          { time: "13:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "15:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "17:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
       },
     },
     stops: [
@@ -61,6 +136,18 @@ export const busLines = [
     ],
     active: true,
     popular: true,
+    farePrice: {
+      ida: {
+        from: "Terminal Central",
+        to: "Conjunto Amélia Torres",
+        price: "R$ 4,50",
+      },
+      volta: {
+        from: "Conjunto Amélia Torres",
+        to: "Terminal Central",
+        price: "R$ 4,50",
+      },
+    },
   },
   {
     id: "101",
@@ -69,47 +156,81 @@ export const busLines = [
     schedules: {
       weekday: {
         Ida: [
-          "05:00",
-          "06:00",
-          "07:00",
-          "08:00",
-          "09:00",
-          "10:00",
-          "11:00",
-          "12:00",
-          "13:00",
-          "14:00",
-          "15:00",
-          "16:00",
-          "17:00",
-          "18:00",
-          "19:00",
+          { time: "05:00", route: "Via Rodoviária", css: "bg-red-100 text-red-800" },
+          { time: "06:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "07:00", route: "Via Rodoviária", css: "bg-red-100 text-red-800" },
+          { time: "08:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "09:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "10:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "11:00", route: "Via Rodoviária", css: "bg-red-100 text-red-800" },
+          { time: "12:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "14:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "15:00", route: "Via Rodoviária", css: "bg-red-100 text-red-800" },
+          { time: "16:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "17:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "18:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "19:00", route: "Via Rodoviária", css: "bg-red-100 text-red-800" },
         ],
         Volta: [
-          "05:30",
-          "06:30",
-          "07:30",
-          "08:30",
-          "09:30",
-          "10:30",
-          "11:30",
-          "12:30",
-          "13:30",
-          "14:30",
-          "15:30",
-          "16:30",
-          "17:30",
-          "18:30",
-          "19:30",
+          { time: "05:30", route: "Via Universidade", css: "bg-indigo-100 text-indigo-800" },
+          { time: "06:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "07:30", route: "Via Universidade", css: "bg-indigo-100 text-indigo-800" },
+          { time: "08:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "09:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "10:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "11:30", route: "Via Universidade", css: "bg-indigo-100 text-indigo-800" },
+          { time: "12:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "14:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "15:30", route: "Via Universidade", css: "bg-indigo-100 text-indigo-800" },
+          { time: "16:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "17:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "18:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "19:30", route: "Via Universidade", css: "bg-indigo-100 text-indigo-800" },
         ],
       },
       saturday: {
-        Ida: ["06:00", "07:30", "09:00", "10:30", "12:00", "13:30", "15:00", "16:30", "18:00"],
-        Volta: ["06:30", "08:00", "09:30", "11:00", "12:30", "14:00", "15:30", "17:00", "18:30"],
+        Ida: [
+          { time: "06:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "07:30", route: "Via Rodoviária", css: "bg-red-100 text-red-800" },
+          { time: "09:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "12:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:30", route: "Via Rodoviária", css: "bg-red-100 text-red-800" },
+          { time: "15:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "18:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
+        Volta: [
+          { time: "06:30", route: "Via Universidade", css: "bg-indigo-100 text-indigo-800" },
+          { time: "08:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "09:30", route: "Via Universidade", css: "bg-indigo-100 text-indigo-800" },
+          { time: "11:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "12:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "14:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "15:30", route: "Via Universidade", css: "bg-indigo-100 text-indigo-800" },
+          { time: "17:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "18:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+        ],
       },
       sunday: {
-        Ida: ["07:00", "09:00", "11:00", "13:00", "15:00", "17:00"],
-        Volta: ["07:30", "09:30", "11:30", "13:30", "15:30", "17:30"],
+        Ida: [
+          { time: "07:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "09:00", route: "Via Rodoviária", css: "bg-red-100 text-red-800" },
+          { time: "11:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "15:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "17:00", route: "Via Rodoviária", css: "bg-red-100 text-red-800" },
+        ],
+        Volta: [
+          { time: "07:30", route: "Via Universidade", css: "bg-indigo-100 text-indigo-800" },
+          { time: "09:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "11:30", route: "Via Universidade", css: "bg-indigo-100 text-indigo-800" },
+          { time: "13:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "15:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
+          { time: "17:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
       },
     },
     stops: [
@@ -123,6 +244,18 @@ export const busLines = [
     ],
     active: true,
     popular: true,
+    farePrice: {
+      ida: {
+        from: "Terminal Central",
+        to: "Zona Norte",
+        price: "R$ 5,00",
+      },
+      volta: {
+        from: "Zona Norte",
+        to: "Terminal Central",
+        price: "R$ 5,00",
+      },
+    },
   },
   {
     id: "205",
@@ -130,16 +263,64 @@ export const busLines = [
     direction: ["Ida", "Volta"],
     schedules: {
       weekday: {
-        Ida: ["06:00", "08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00"],
-        Volta: ["06:30", "08:30", "10:30", "12:30", "14:30", "16:30", "18:30", "20:30"],
+        Ida: [
+          { time: "06:00", route: "Via Rodovia", css: "bg-orange-100 text-orange-800" },
+          { time: "08:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:00", route: "Via Rodovia", css: "bg-orange-100 text-orange-800" },
+          { time: "12:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "14:00", route: "Via Rodovia", css: "bg-orange-100 text-orange-800" },
+          { time: "16:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "18:00", route: "Via Rodovia", css: "bg-orange-100 text-orange-800" },
+          { time: "20:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
+        Volta: [
+          { time: "06:30", route: "Via Industrial", css: "bg-gray-100 text-gray-800" },
+          { time: "08:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:30", route: "Via Industrial", css: "bg-gray-100 text-gray-800" },
+          { time: "12:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "14:30", route: "Via Industrial", css: "bg-gray-100 text-gray-800" },
+          { time: "16:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "18:30", route: "Via Industrial", css: "bg-gray-100 text-gray-800" },
+          { time: "20:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
       },
       saturday: {
-        Ida: ["07:00", "09:00", "11:00", "13:00", "15:00", "17:00", "19:00"],
-        Volta: ["07:30", "09:30", "11:30", "13:30", "15:30", "17:30", "19:30"],
+        Ida: [
+          { time: "07:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "09:00", route: "Via Rodovia", css: "bg-orange-100 text-orange-800" },
+          { time: "11:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:00", route: "Via Rodovia", css: "bg-orange-100 text-orange-800" },
+          { time: "15:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "17:00", route: "Via Rodovia", css: "bg-orange-100 text-orange-800" },
+          { time: "19:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
+        Volta: [
+          { time: "07:30", route: "Via Industrial", css: "bg-gray-100 text-gray-800" },
+          { time: "09:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "11:30", route: "Via Industrial", css: "bg-gray-100 text-gray-800" },
+          { time: "13:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "15:30", route: "Via Industrial", css: "bg-gray-100 text-gray-800" },
+          { time: "17:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "19:30", route: "Via Industrial", css: "bg-gray-100 text-gray-800" },
+        ],
       },
       sunday: {
-        Ida: ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00"],
-        Volta: ["08:30", "10:30", "12:30", "14:30", "16:30", "18:30"],
+        Ida: [
+          { time: "08:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:00", route: "Via Rodovia", css: "bg-orange-100 text-orange-800" },
+          { time: "12:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "14:00", route: "Via Rodovia", css: "bg-orange-100 text-orange-800" },
+          { time: "16:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "18:00", route: "Via Rodovia", css: "bg-orange-100 text-orange-800" },
+        ],
+        Volta: [
+          { time: "08:30", route: "Via Industrial", css: "bg-gray-100 text-gray-800" },
+          { time: "10:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "12:30", route: "Via Industrial", css: "bg-gray-100 text-gray-800" },
+          { time: "14:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:30", route: "Via Industrial", css: "bg-gray-100 text-gray-800" },
+          { time: "18:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
       },
     },
     stops: [
@@ -151,6 +332,18 @@ export const busLines = [
     ],
     active: true,
     popular: true,
+    farePrice: {
+      ida: {
+        from: "Aeroporto Internacional",
+        to: "Terminal Central",
+        price: "R$ 6,50",
+      },
+      volta: {
+        from: "Terminal Central",
+        to: "Aeroporto Internacional",
+        price: "R$ 6,50",
+      },
+    },
   },
   {
     id: "302",
@@ -159,45 +352,79 @@ export const busLines = [
     schedules: {
       weekday: {
         Ida: [
-          "05:15",
-          "06:15",
-          "07:15",
-          "08:15",
-          "09:15",
-          "10:15",
-          "11:15",
-          "12:15",
-          "13:15",
-          "14:15",
-          "15:15",
-          "16:15",
-          "17:15",
-          "18:15",
+          { time: "05:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "06:15", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+          { time: "07:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "08:15", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+          { time: "09:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:15", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+          { time: "11:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "12:15", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+          { time: "13:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "14:15", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+          { time: "15:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:15", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+          { time: "17:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "18:15", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
         ],
         Volta: [
-          "05:45",
-          "06:45",
-          "07:45",
-          "08:45",
-          "09:45",
-          "10:45",
-          "11:45",
-          "12:45",
-          "13:45",
-          "14:45",
-          "15:45",
-          "16:45",
-          "17:45",
-          "18:45",
+          { time: "05:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "06:45", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "07:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "08:45", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "09:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "10:45", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "11:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "12:45", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "14:45", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "15:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "16:45", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "17:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "18:45", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
         ],
       },
       saturday: {
-        Ida: ["06:15", "07:45", "09:15", "10:45", "12:15", "13:45", "15:15", "16:45", "18:15"],
-        Volta: ["06:45", "08:15", "09:45", "11:15", "12:45", "14:15", "15:45", "17:15", "18:45"],
+        Ida: [
+          { time: "06:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "07:45", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+          { time: "09:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:45", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+          { time: "12:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:45", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+          { time: "15:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:45", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+          { time: "18:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
+        Volta: [
+          { time: "06:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "08:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "09:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "11:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "12:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "14:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "15:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "17:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "18:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+        ],
       },
       sunday: {
-        Ida: ["07:15", "09:15", "11:15", "13:15", "15:15", "17:15"],
-        Volta: ["07:45", "09:45", "11:45", "13:45", "15:45", "17:45"],
+        Ida: [
+          { time: "07:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "09:15", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+          { time: "11:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:15", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+          { time: "15:15", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "17:15", route: "Via Mercado", css: "bg-teal-100 text-teal-800" },
+        ],
+        Volta: [
+          { time: "07:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "09:45", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "11:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "13:45", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "15:45", route: "Via Escola", css: "bg-pink-100 text-pink-800" },
+          { time: "17:45", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
       },
     },
     stops: [
@@ -210,6 +437,18 @@ export const busLines = [
     ],
     active: true,
     popular: false,
+    farePrice: {
+      ida: {
+        from: "Vila Esperança",
+        to: "Terminal Central",
+        price: "R$ 4,25",
+      },
+      volta: {
+        from: "Terminal Central",
+        to: "Vila Esperança",
+        price: "R$ 4,25",
+      },
+    },
   },
   {
     id: "150",
@@ -218,48 +457,92 @@ export const busLines = [
     schedules: {
       weekday: {
         Ida: [
-          "06:00",
-          "07:00",
-          "08:00",
-          "09:00",
-          "10:00",
-          "11:00",
-          "12:00",
-          "13:00",
-          "14:00",
-          "15:00",
-          "16:00",
-          "17:00",
-          "18:00",
+          { time: "06:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "07:00", route: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+          { time: "08:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "09:00", route: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+          { time: "10:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "11:00", route: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+          { time: "12:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:00", route: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+          { time: "14:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "15:00", route: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+          { time: "16:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "17:00", route: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+          { time: "18:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
         ],
         Volta: [
-          "06:30",
-          "07:30",
-          "08:30",
-          "09:30",
-          "10:30",
-          "11:30",
-          "12:30",
-          "13:30",
-          "14:30",
-          "15:30",
-          "16:30",
-          "17:30",
-          "18:30",
+          { time: "06:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+          { time: "07:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "08:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+          { time: "09:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+          { time: "11:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "12:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+          { time: "13:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "14:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+          { time: "15:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+          { time: "17:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "18:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
         ],
       },
       saturday: {
-        Ida: ["07:00", "08:30", "10:00", "11:30", "13:00", "14:30", "16:00", "17:30"],
-        Volta: ["07:30", "09:00", "10:30", "12:00", "13:30", "15:00", "16:30", "18:00"],
+        Ida: [
+          { time: "07:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "08:30", route: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+          { time: "10:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "11:30", route: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+          { time: "13:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "14:30", route: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+          { time: "16:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "17:30", route: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+        ],
+        Volta: [
+          { time: "07:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+          { time: "09:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+          { time: "12:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+          { time: "15:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+          { time: "18:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
       },
       sunday: {
-        Ida: ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00"],
-        Volta: ["08:30", "10:30", "12:30", "14:30", "16:30", "18:30"],
+        Ida: [
+          { time: "08:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:00", route: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+          { time: "12:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "14:00", route: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+          { time: "16:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "18:00", route: "Via Avenida", css: "bg-cyan-100 text-cyan-800" },
+        ],
+        Volta: [
+          { time: "08:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+          { time: "10:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "12:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+          { time: "14:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:30", route: "Via Clínica", css: "bg-emerald-100 text-emerald-800" },
+          { time: "18:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
       },
     },
     stops: ["Jardim das Flores", "Avenida das Palmeiras", "Clínica Médica", "Banco Central", "Shopping Center"],
     active: true,
     popular: false,
+    farePrice: {
+      ida: {
+        from: "Jardim das Flores",
+        to: "Shopping Center",
+        price: "R$ 3,75",
+      },
+      volta: {
+        from: "Shopping Center",
+        to: "Jardim das Flores",
+        price: "R$ 3,75",
+      },
+    },
   },
   {
     id: "400",
@@ -268,55 +551,101 @@ export const busLines = [
     schedules: {
       weekday: {
         Ida: [
-          "05:30",
-          "06:30",
-          "07:30",
-          "08:30",
-          "09:30",
-          "10:30",
-          "11:30",
-          "12:30",
-          "13:30",
-          "14:30",
-          "15:30",
-          "16:30",
-          "17:30",
-          "18:30",
+          { time: "05:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "06:30", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+          { time: "07:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "08:30", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+          { time: "09:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:30", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+          { time: "11:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "12:30", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+          { time: "13:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "14:30", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+          { time: "15:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:30", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+          { time: "17:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "18:30", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
         ],
         Volta: [
-          "06:00",
-          "07:00",
-          "08:00",
-          "09:00",
-          "10:00",
-          "11:00",
-          "12:00",
-          "13:00",
-          "14:00",
-          "15:00",
-          "16:00",
-          "17:00",
-          "18:00",
-          "19:00",
+          { time: "06:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "07:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "08:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "09:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "11:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "12:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "13:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "14:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "15:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "17:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "18:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "19:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
         ],
       },
       saturday: {
-        Ida: ["06:30", "08:00", "09:30", "11:00", "12:30", "14:00", "15:30", "17:00", "18:30"],
-        Volta: ["07:00", "08:30", "10:00", "11:30", "13:00", "14:30", "16:00", "17:30", "19:00"],
+        Ida: [
+          { time: "06:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "08:00", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+          { time: "09:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "11:00", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+          { time: "12:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "14:00", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+          { time: "15:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "17:00", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+          { time: "18:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
+        Volta: [
+          { time: "07:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "08:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "10:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "11:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "14:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "17:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "19:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+        ],
       },
       sunday: {
-        Ida: ["07:30", "09:30", "11:30", "13:30", "15:30", "17:30"],
-        Volta: ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00"],
+        Ida: [
+          { time: "07:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "09:30", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+          { time: "11:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "13:30", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+          { time: "15:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "17:30", route: "Via Igreja", css: "bg-violet-100 text-violet-800" },
+        ],
+        Volta: [
+          { time: "08:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "10:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "12:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "14:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+          { time: "16:00", route: "Via Prefeitura", css: "bg-slate-100 text-slate-800" },
+          { time: "18:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
+        ],
       },
     },
     stops: ["Bairro Alto", "Igreja Matriz", "Prefeitura", "Correios", "Terminal Central"],
     active: true,
     popular: false,
+    farePrice: {
+      ida: {
+        from: "Bairro Alto",
+        to: "Terminal Central",
+        price: "R$ 4,00",
+      },
+      volta: {
+        from: "Terminal Central",
+        to: "Bairro Alto",
+        price: "R$ 4,00",
+      },
+    },
   },
 ]
 
 // Função para obter o próximo horário baseado no dia atual
-export function getNextSchedule(line: any) {
+export function getNextSchedule(line: BusLine) {
   const now = new Date()
   const dayOfWeek = now.getDay() // 0 = domingo, 6 = sábado
   const currentTime = now.getHours() * 100 + now.getMinutes()
@@ -332,18 +661,18 @@ export function getNextSchedule(line: any) {
 
   const todaySchedules = line.schedules[scheduleType]
   const allSchedules = [...todaySchedules.Ida, ...todaySchedules.Volta]
-    .map((time) => {
-      const [hours, minutes] = time.split(":").map(Number)
-      return { time, value: hours * 100 + minutes }
+    .map((schedule) => {
+      const [hours, minutes] = schedule.time.split(":").map(Number)
+      return { time: schedule.time, value: hours * 100 + minutes }
     })
     .sort((a, b) => a.value - b.value)
 
   const nextSchedule = allSchedules.find((schedule) => schedule.value > currentTime)
-  return nextSchedule ? nextSchedule.time : allSchedules[0]?.time || todaySchedules.Ida[0]
+  return nextSchedule ? nextSchedule.time : allSchedules[0]?.time || todaySchedules.Ida[0]?.time
 }
 
 // Função para obter informações detalhadas do próximo ônibus
-export function getNextBusInfo(line: any) {
+export function getNextBusInfo(line: BusLine) {
   const now = new Date()
   const dayOfWeek = now.getDay()
   const currentTime = now.getHours() * 100 + now.getMinutes()
@@ -361,8 +690,8 @@ export function getNextBusInfo(line: any) {
 
   // Combinar horários com direção
   const allSchedulesWithDirection = [
-    ...todaySchedules.Ida.map((time: string) => ({ time, direction: "Ida" })),
-    ...todaySchedules.Volta.map((time: string) => ({ time, direction: "Volta" })),
+    ...todaySchedules.Ida.map((schedule) => ({ ...schedule, direction: "Ida" })),
+    ...todaySchedules.Volta.map((schedule) => ({ ...schedule, direction: "Volta" })),
   ]
     .map((schedule) => {
       const [hours, minutes] = schedule.time.split(":").map(Number)
@@ -415,6 +744,8 @@ export function getNextBusInfo(line: any) {
   return {
     direction: nextSchedule.direction,
     scheduledTime: nextSchedule.scheduledTime,
+    route: nextSchedule.route,
+    css: nextSchedule.css,
     minutesUntil: Math.max(0, minutesUntil),
   }
 }
