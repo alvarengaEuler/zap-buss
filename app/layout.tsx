@@ -7,7 +7,7 @@ import ServiceWorkerRegistration from "@/components/service-worker-registration"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "BusWaze - Consulta de Linhas de Ônibus",
+  title: "ZapBuss - Consulta de Linhas de Ônibus",
   description: "Encontre horários e linhas de ônibus da sua cidade de forma rápida e fácil",
   manifest: "/manifest.json",
   themeColor: "#3b82f6",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "BusWaze",
+    title: "ZapBuss",
   },
       icons: [
     {
@@ -44,7 +44,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="BusWaze" />
+        <meta name="apple-mobile-web-app-title" content="ZapBuss" />
         <link rel="apple-touch-icon" href="/zapbuss-192.png" />
       </head>
       <body className={inter.className}>

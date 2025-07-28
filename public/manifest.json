@@ -1,6 +1,6 @@
 {
-  "name": "BusWaze - Consulta de Linhas de Ônibus",
-  "short_name": "BusWaze",
+  "name": "ZapBuss - Consulta de Linhas de Ônibus",
+  "short_name": "ZapBuss",
   "description": "Encontre horários e linhas de ônibus da sua cidade",
   "start_url": "/",
   "display": "standalone",

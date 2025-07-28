@@ -67,7 +67,7 @@ export default function LineDetailsPage({ params }: { params: Promise<PageParams
               </Button>
               <ShareButton
                 title={`Linha ${line.id} - ${line.name}`}
-                text={`Confira os horários da linha ${line.id} - ${line.name} no BusWaze`}
+                text={`Confira os horários da linha ${line.id} - ${line.name} no ZapBuss!`}
                 className="rounded-full"
               />
             </div>

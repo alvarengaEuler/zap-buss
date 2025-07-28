@@ -86,7 +86,7 @@ export default function InstallPrompt() {
               <Smartphone className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-gray-900 text-sm">Instalar BusWaze</h3>
+              <h3 className="font-semibold text-gray-900 text-sm">Instalar ZapBuss</h3>
               <p className="text-xs text-gray-600 leading-tight">Adicione à tela inicial para acesso rápido</p>
             </div>
             <div className="flex items-center gap-2 flex-shrink-0">

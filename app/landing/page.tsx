@@ -131,7 +131,7 @@ export default function LandingPage() {
       <section className="py-20 px-4 bg-gradient-to-r from-blue-50 to-green-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Por que escolher o BusWaze?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Por que escolher o ZapBuss?</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               A melhor experiência para consultar transporte público
             </p>
@@ -212,7 +212,7 @@ export default function LandingPage() {
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center">
                   <MapPin className="w-4 h-4 text-white" />
                 </div>
-                <span className="font-bold text-lg">BusWaze</span>
+                <span className="font-bold text-lg">ZapBuss</span>
               </div>
               <p className="text-gray-400 text-sm">
                 A forma mais inteligente de consultar horários de ônibus da sua cidade.
@@ -265,7 +265,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2024 BusWaze. Todos os direitos reservados.</p>
+            <p>&copy; 2025 ZapBuss. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>

@@ -49,7 +49,7 @@ export default function AdminLogin() {
           <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
             <MapPin className="w-8 h-8 text-white" />
           </div>
-          <CardTitle className="text-2xl font-bold">Admin BusWaze</CardTitle>
+          <CardTitle className="text-2xl font-bold">Admin ZapBuss</CardTitle>
           <p className="text-gray-600">Acesse o painel administrativo</p>
         </CardHeader>
         <CardContent>

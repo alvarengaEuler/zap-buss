@@ -1,4 +1,4 @@
-const CACHE_NAME = "buswaze-v1"
+const CACHE_NAME = "zapbuss-v1"
 const urlsToCache = [
   "/",
   "/app",
