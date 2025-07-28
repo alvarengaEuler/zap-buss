@@ -41,114 +41,111 @@ export interface BusLine {
 
 export const busLines: BusLine[] = [
   {
-    id: "250",
-    name: "Conjunto Amélia Torres (Circular)",
-    direction: ["Ida", "Volta"],
-    schedules: {
-      weekday: {
-        Ida: [
-          { time: "05:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "06:30", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
-          { time: "07:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "08:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
-          { time: "09:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "10:30", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
-          { time: "11:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "12:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
-          { time: "13:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "14:30", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
-          { time: "15:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "16:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
-          { time: "17:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "18:00", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
-          { time: "19:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-        ],
-        Volta: [
-          { time: "06:00", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
-          { time: "07:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "08:00", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
-          { time: "09:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "10:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
-          { time: "11:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "12:00", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
-          { time: "12:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "14:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
-          { time: "15:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "16:00", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
-          { time: "17:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "18:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
-          { time: "18:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "19:30", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
-        ],
-      },
-      saturday: {
-        Ida: [
-          { time: "06:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "07:30", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
-          { time: "09:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "10:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
-          { time: "12:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "13:30", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
-          { time: "15:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "16:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
-          { time: "18:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-        ],
-        Volta: [
-          { time: "06:30", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
-          { time: "08:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "09:30", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
-          { time: "11:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "12:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
-          { time: "14:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "15:30", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
-          { time: "17:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "18:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
-        ],
-      },
-      sunday: {
-        Ida: [
-          { time: "07:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "09:00", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
-          { time: "11:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "13:00", route: "Via Shopping", css: "bg-green-100 text-green-800" },
-          { time: "15:00", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "17:00", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
-        ],
-        Volta: [
-          { time: "07:30", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
-          { time: "09:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "11:30", route: "Via Hospital", css: "bg-purple-100 text-purple-800" },
-          { time: "13:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-          { time: "15:30", route: "Via Shopping", css: "bg-green-100 text-green-800" },
-          { time: "17:30", route: "Via Centro", css: "bg-blue-100 text-blue-800" },
-        ],
-      },
+  id: "250",
+  name: "Conjunto Amélia Torres (Circular)",
+  direction: ["Ida", "Volta"],
+  schedules: {
+    weekday: {
+      Ida: [
+        { time: "05:20", route: "Rota normal", css: "" },
+        { time: "06:25", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
+        { time: "07:05", route: "Rota normal", css: "" },
+        { time: "07:50", route: "Rota normal", css: "" },
+        { time: "09:00", route: "Rota normal", css: "" },
+        { time: "11:10", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
+        { time: "12:00", route: "Rota normal", css: "" },
+        { time: "13:10", route: "Rota normal", css: "" },
+        { time: "14:35", route: "Via Haver & Boecker", css: "bg-blue-100 text-blue-800" },
+        { time: "15:10", route: "Rota normal", css: "" },
+        { time: "16:00", route: "Via Conjunto Laginha", css: "bg-amber-100 text-amber-800" },
+        { time: "17:10", route: "Via Haver & Boecker", css: "bg-blue-100 text-blue-800" },
+        { time: "18:10", route: "Rota normal", css: "" },
+        { time: "18:40", route: "Via Haver & Boecker", css: "bg-blue-100 text-blue-800" },
+        { time: "19:40", route: "Rota normal", css: "" },
+        { time: "20:40", route: "Rota normal", css: "" },
+        { time: "21:45", route: "Rota normal", css: "" }
+      ],
+      Volta: [
+        { time: "04:50", route: "Rota normal", css: "" },
+        { time: "05:55", route: "Via Haver & Boecker", css: "bg-blue-100 text-blue-800" },
+        { time: "06:30", route: "Via Haver & Boecker", css: "bg-blue-100 text-blue-800" },
+        { time: "07:15", route: "Rota normal", css: "" },
+        { time: "08:25", route: "Rota normal", css: "" },
+        { time: "10:30", route: "Rota normal", css: "" },
+        { time: "11:20", route: "Rota normal", css: "" },
+        { time: "12:35", route: "Rota normal", css: "" },
+        { time: "13:50", route: "Rota normal", css: "" },
+        { time: "15:10", route: "Rota normal", css: "" },
+        { time: "16:20", route: "Rota normal", css: "" },
+        { time: "17:35", route: "Via Haver & Boecker", css: "bg-blue-100 text-blue-800" },
+        { time: "18:00", route: "Rota normal", css: "" },
+        { time: "19:10", route: "Rota normal", css: "" },
+        { time: "20:10", route: "Rota normal", css: "" },
+        { time: "21:10", route: "Rota normal", css: "" },
+        { time: "22:15", route: "Rota normal", css: "" }
+      ]
     },
-    stops: [
-      "Terminal Central",
-      "Avenida Brasil",
-      "Rua das Acácias",
-      "Praça da Bandeira",
-      "Escola Municipal",
-      "Posto de Saúde",
-      "Mercado Central",
-      "Conjunto Amélia Torres",
-    ],
-    active: true,
-    popular: true,
-    farePrice: {
-      ida: {
-        from: "Terminal Central",
-        to: "Conjunto Amélia Torres",
-        price: "R$ 4,50",
-      },
-      volta: {
-        from: "Conjunto Amélia Torres",
-        to: "Terminal Central",
-        price: "R$ 4,50",
-      },
+    saturday: {
+      Ida: [
+        { time: "05:20", route: "Rota normal", css: "" },
+        { time: "06:35", route: "Via Haver & Boecker", css: "bg-blue-100 text-blue-800" },
+        { time: "08:10", route: "Rota normal", css: "" },
+        { time: "10:15", route: "Rota normal", css: "" },
+        { time: "12:30", route: "Rota normal", css: "" },
+        { time: "14:10", route: "Rota normal", css: "" },
+        { time: "15:30", route: "Rota normal", css: "" },
+        { time: "17:00", route: "Rota normal", css: "" },
+        { time: "18:40", route: "Via Haver & Boecker", css: "bg-blue-100 text-blue-800" }
+      ],
+      Volta: [
+        { time: "05:00", route: "Rota normal", css: "" },
+        { time: "05:55", route: "Via Haver & Boecker", css: "bg-blue-100 text-blue-800" },
+        { time: "07:15", route: "Rota normal", css: "" },
+        { time: "09:00", route: "Rota normal", css: "" },
+        { time: "11:15", route: "Rota normal", css: "" },
+        { time: "13:30", route: "Rota normal", css: "" },
+        { time: "15:00", route: "Rota normal", css: "" },
+        { time: "16:00", route: "Rota normal", css: "" },
+        { time: "17:35", route: "Via Haver & Boecker", css: "bg-blue-100 text-blue-800" }
+      ]
     },
+    sunday: {
+      Ida: [
+        { time: "06:35", route: "Via Haver & Boecker", css: "bg-blue-100 text-blue-800" },
+        { time: "08:10", route: "Rota normal", css: "" },
+        { time: "18:40", route: "Rota normal", css: "" },
+        { time: "20:10", route: "Rota normal", css: "" }
+      ],
+      Volta: [
+        { time: "05:55", route: "Via Haver & Boecker", css: "bg-blue-100 text-blue-800" },
+        { time: "07:35", route: "Rota normal", css: "" },
+        { time: "17:35", route: "Via Haver & Boecker", css: "bg-blue-100 text-blue-800" },
+        { time: "19:20", route: "Rota normal", css: "" }
+      ]
+    }
   },
+  stops: [
+    "Praça Amélia Torres",
+    "Haver & Boecker",
+    "Conjunto Laginha",
+    "Rua Moacir Pereira Ciroca",
+    "Santo Antônio"
+  ],
+  active: true,
+  popular: true,
+  farePrice: {
+    ida: {
+      from: "Praça Amélia Torres",
+      to: "Santo Antônio",
+      price: "R$ 4,50"
+    },
+    volta: {
+      from: "Santo Antônio",
+      to: "Praça Amélia Torres",
+      price: "R$ 4,50"
+    }
+  }
+},
   {
     id: "101",
     name: "Centro - Zona Norte",

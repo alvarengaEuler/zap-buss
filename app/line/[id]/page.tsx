@@ -118,40 +118,6 @@ export default function LineDetailsPage({ params }: { params: Promise<PageParams
           </Card>
         )}
 
-        {/* Fare Prices */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <DollarSign className="w-5 h-5 text-green-600" />
-              Valor da Passagem
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-blue-800 mb-2">Ida</h4>
-                <p className="text-sm text-blue-700 mb-1">
-                  <strong>De:</strong> {line.farePrice.ida.from}
-                </p>
-                <p className="text-sm text-blue-700 mb-2">
-                  <strong>Para:</strong> {line.farePrice.ida.to}
-                </p>
-                <p className="text-lg font-bold text-blue-800">{line.farePrice.ida.price}</p>
-              </div>
-              <div className="bg-green-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-green-800 mb-2">Volta</h4>
-                <p className="text-sm text-green-700 mb-1">
-                  <strong>De:</strong> {line.farePrice.volta.from}
-                </p>
-                <p className="text-sm text-green-700 mb-2">
-                  <strong>Para:</strong> {line.farePrice.volta.to}
-                </p>
-                <p className="text-lg font-bold text-green-800">{line.farePrice.volta.price}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Schedules */}
         <Card className="mb-6">
           <CardHeader>
@@ -179,7 +145,7 @@ export default function LineDetailsPage({ params }: { params: Promise<PageParams
                       {line.schedules.weekday.Ida.map((schedule, index) => (
                         <div
                           key={index}
-                          className={`text-center py-2 px-3 rounded-lg font-medium text-sm ${schedule.css}`}
+                          className={`text-center py-2 px-3 rounded-lg font-medium text-sm ${schedule.css ? schedule.css : "bg-gray-100"}`}
                         >
                           <div className="font-semibold">{schedule.time}</div>
                           <div className="text-xs mt-1 opacity-80">{schedule.route}</div>
@@ -276,8 +242,42 @@ export default function LineDetailsPage({ params }: { params: Promise<PageParams
           </CardContent>
         </Card>
 
-        {/* Stops */}
+        {/* Fare Prices */}
         <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <DollarSign className="w-5 h-5 text-green-600" />
+              Valor da Passagem
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h4 className="font-semibold text-blue-800 mb-2">Ida</h4>
+                <p className="text-sm text-blue-700 mb-1">
+                  <strong>De:</strong> {line.farePrice.ida.from}
+                </p>
+                <p className="text-sm text-blue-700 mb-2">
+                  <strong>Para:</strong> {line.farePrice.ida.to}
+                </p>
+                <p className="text-lg font-bold text-blue-800">{line.farePrice.ida.price}</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h4 className="font-semibold text-green-800 mb-2">Volta</h4>
+                <p className="text-sm text-green-700 mb-1">
+                  <strong>De:</strong> {line.farePrice.volta.from}
+                </p>
+                <p className="text-sm text-green-700 mb-2">
+                  <strong>Para:</strong> {line.farePrice.volta.to}
+                </p>
+                <p className="text-lg font-bold text-green-800">{line.farePrice.volta.price}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Stops */}
+        {/* <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <MapPin className="w-5 h-5 text-green-600" />
@@ -298,7 +298,7 @@ export default function LineDetailsPage({ params }: { params: Promise<PageParams
               ))}
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
 
         {/* External Link */}
         <Card>
