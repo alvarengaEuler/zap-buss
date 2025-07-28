@@ -669,7 +669,86 @@ export function getNextSchedule(line: BusLine) {
 }
 
 // Função para obter informações detalhadas do próximo ônibus
-export function getNextBusInfo(line: BusLine) {
+// export function getNextBusInfo(line: BusLine) {
+//   const now = new Date()
+//   const dayOfWeek = now.getDay()
+//   const currentTime = now.getHours() * 100 + now.getMinutes()
+
+//   let scheduleType: "weekday" | "saturday" | "sunday"
+//   if (dayOfWeek === 0) {
+//     scheduleType = "sunday"
+//   } else if (dayOfWeek === 6) {
+//     scheduleType = "saturday"
+//   } else {
+//     scheduleType = "weekday"
+//   }
+
+//   const todaySchedules = line.schedules[scheduleType]
+
+//   // Combinar horários com direção
+//   const allSchedulesWithDirection = [
+//     ...todaySchedules.Ida.map((schedule) => ({ ...schedule, direction: "Ida" })),
+//     ...todaySchedules.Volta.map((schedule) => ({ ...schedule, direction: "Volta" })),
+//   ]
+//     .map((schedule) => {
+//       const [hours, minutes] = schedule.time.split(":").map(Number)
+//       return {
+//         ...schedule,
+//         value: hours * 100 + minutes,
+//         scheduledTime: schedule.time,
+//       }
+//     })
+//     .sort((a, b) => a.value - b.value)
+
+//   // Encontrar próximo horário
+//   let nextSchedule = allSchedulesWithDirection.find((schedule) => schedule.value > currentTime)
+
+//   // Se não encontrou, pegar o primeiro do dia seguinte
+//   if (!nextSchedule) {
+//     nextSchedule = allSchedulesWithDirection[0]
+//   }
+
+//   if (!nextSchedule) return null
+
+//   // Calcular minutos até o próximo ônibus
+//   const nextTime = nextSchedule.value
+//   let minutesUntil: number
+
+//   if (nextTime > currentTime) {
+//     // Mesmo dia
+//     const currentHours = Math.floor(currentTime / 100)
+//     const currentMinutes = currentTime % 100
+//     const nextHours = Math.floor(nextTime / 100)
+//     const nextMinutes = nextTime % 100
+
+//     const currentTotalMinutes = currentHours * 60 + currentMinutes
+//     const nextTotalMinutes = nextHours * 60 + nextMinutes
+
+//     minutesUntil = nextTotalMinutes - currentTotalMinutes
+//   } else {
+//     // Próximo dia (após meia-noite)
+//     const currentHours = Math.floor(currentTime / 100)
+//     const currentMinutes = currentTime % 100
+//     const nextHours = Math.floor(nextTime / 100)
+//     const nextMinutes = nextTime % 100
+
+//     const currentTotalMinutes = currentHours * 60 + currentMinutes
+//     const nextTotalMinutes = (nextHours + 24) * 60 + nextMinutes
+
+//     minutesUntil = nextTotalMinutes - currentTotalMinutes
+//   }
+
+//   return {
+//     direction: nextSchedule.direction,
+//     scheduledTime: nextSchedule.scheduledTime,
+//     route: nextSchedule.route,
+//     css: nextSchedule.css,
+//     minutesUntil: Math.max(0, minutesUntil),
+//   }
+// }
+import type { BusLine } from "@/types"
+
+export function getNextBusInfo(line: BusLine, direction: "Ida" | "Volta") {
   const now = new Date()
   const dayOfWeek = now.getDay()
   const currentTime = now.getHours() * 100 + now.getMinutes()
@@ -683,60 +762,44 @@ export function getNextBusInfo(line: BusLine) {
     scheduleType = "weekday"
   }
 
-  const todaySchedules = line.schedules[scheduleType]
+  const todaySchedules = line.schedules[scheduleType][direction]
 
-  // Combinar horários com direção
-  const allSchedulesWithDirection = [
-    ...todaySchedules.Ida.map((schedule) => ({ ...schedule, direction: "Ida" })),
-    ...todaySchedules.Volta.map((schedule) => ({ ...schedule, direction: "Volta" })),
-  ]
+  const parsedSchedules = todaySchedules
     .map((schedule) => {
       const [hours, minutes] = schedule.time.split(":").map(Number)
       return {
         ...schedule,
+        direction,
         value: hours * 100 + minutes,
         scheduledTime: schedule.time,
       }
     })
     .sort((a, b) => a.value - b.value)
 
-  // Encontrar próximo horário
-  let nextSchedule = allSchedulesWithDirection.find((schedule) => schedule.value > currentTime)
+  let nextSchedule = parsedSchedules.find((schedule) => schedule.value > currentTime)
 
-  // Se não encontrou, pegar o primeiro do dia seguinte
+  // Se não encontrou, pegar o primeiro do dia seguinte (mesma direção)
   if (!nextSchedule) {
-    nextSchedule = allSchedulesWithDirection[0]
+    nextSchedule = parsedSchedules[0]
   }
 
   if (!nextSchedule) return null
 
-  // Calcular minutos até o próximo ônibus
   const nextTime = nextSchedule.value
   let minutesUntil: number
 
-  if (nextTime > currentTime) {
-    // Mesmo dia
-    const currentHours = Math.floor(currentTime / 100)
-    const currentMinutes = currentTime % 100
-    const nextHours = Math.floor(nextTime / 100)
-    const nextMinutes = nextTime % 100
+  const currentHours = Math.floor(currentTime / 100)
+  const currentMinutes = currentTime % 100
+  const nextHours = Math.floor(nextTime / 100)
+  const nextMinutes = nextTime % 100
 
-    const currentTotalMinutes = currentHours * 60 + currentMinutes
-    const nextTotalMinutes = nextHours * 60 + nextMinutes
+  const currentTotalMinutes = currentHours * 60 + currentMinutes
+  const nextTotalMinutes =
+    nextTime > currentTime
+      ? nextHours * 60 + nextMinutes
+      : (nextHours + 24) * 60 + nextMinutes
 
-    minutesUntil = nextTotalMinutes - currentTotalMinutes
-  } else {
-    // Próximo dia (após meia-noite)
-    const currentHours = Math.floor(currentTime / 100)
-    const currentMinutes = currentTime % 100
-    const nextHours = Math.floor(nextTime / 100)
-    const nextMinutes = nextTime % 100
-
-    const currentTotalMinutes = currentHours * 60 + currentMinutes
-    const nextTotalMinutes = (nextHours + 24) * 60 + nextMinutes
-
-    minutesUntil = nextTotalMinutes - currentTotalMinutes
-  }
+  minutesUntil = nextTotalMinutes - currentTotalMinutes
 
   return {
     direction: nextSchedule.direction,
@@ -746,6 +809,7 @@ export function getNextBusInfo(line: BusLine) {
     minutesUntil: Math.max(0, minutesUntil),
   }
 }
+
 
 export function getDayTypeLabel() {
   const dayOfWeek = new Date().getDay()
