@@ -6,8 +6,8 @@ const urlsToCache = [
   "/favorites",
   "/landing",
   "/manifest.json",
-  "/icon-192.png",
-  "/icon-512.png",
+  "/zapbuss-192.png",
+  "/zapbuss-512.png",
 ]
 
 // Install event
@@ -62,8 +62,8 @@ self.addEventListener("push", (event) => {
     const data = event.data.json()
     const options = {
       body: data.body,
-      icon: "/icon-192.png",
-      badge: "/icon-192.png",
+      icon: "/zapbuss-192.png",
+      badge: "/zapbuss-192.png",
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),

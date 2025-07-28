@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import { ArrowLeft, Clock, MapPin, ExternalLink, Heart, Bus, DollarSign } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -11,10 +11,15 @@ import { busLines, getDayTypeLabel, getNextBusInfo } from "@/lib/mock-data"
 import BottomNavigation from "@/components/bottom-navigation"
 import ShareButton from "@/components/share-button"
 
-export default function LineDetailsPage({ params }: { params: { id: string } }) {
+interface PageParams {
+  id: string
+}
+export default function LineDetailsPage({ params }: { params: Promise<PageParams> }) {
+
+  const { id } = use(params)
   const [isFavorite, setIsFavorite] = useState(false)
   const [nextBusInfo, setNextBusInfo] = useState<any>(null)
-  const line = busLines.find((l) => l.id === params.id)
+  const line = busLines.find((l) => l.id === id)
 
   useEffect(() => {
     if (line) {
